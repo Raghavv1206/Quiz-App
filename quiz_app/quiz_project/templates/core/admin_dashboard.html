@@ -1,0 +1,81 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="text-center mb-5">
+    <h2 class="fw-bold text-primary">📊 Admin Dashboard</h2>
+    <p class="text-white">Quick overview of users, quizzes, and attempts</p>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="row text-center mb-4">
+    <div class="col-md-4 mb-3">
+      <div class="card shadow-sm border-0 rounded-3">
+        <div class="card-body">
+          <h6 class="text-muted">Total Users</h6>
+          <h2 class="fw-bold text-primary">{{ total_users }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <div class="card shadow-sm border-0 rounded-3">
+        <div class="card-body">
+          <h6 class="text-muted">Total Quizzes</h6>
+          <h2 class="fw-bold text-success">{{ total_quizzes }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <div class="card shadow-sm border-0 rounded-3">
+        <div class="card-body">
+          <h6 class="text-muted">Total Attempts</h6>
+          <h2 class="fw-bold text-danger">{{ total_attempts }}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Quizzes -->
+  <div class="card shadow-sm border-0 rounded-3 mb-5">
+    <div class="card-header bg-primary text-white fw-bold">
+      Top 5 Attempted Quizzes
+    </div>
+    <ul class="list-group list-group-flush">
+  {% for quiz in top_quizzes %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <span class="fw-semibold text-dark">{{ quiz.title }}</span>
+      <span class="badge bg-primary rounded-pill">{{ quiz.num_attempts }} attempts</span>
+    </li>
+  {% empty %}
+    <li class="list-group-item text-center text-muted">No quiz attempts yet.</li>
+  {% endfor %}
+</ul>
+
+  </div>
+
+  <!-- Action Cards -->
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <div class="card shadow-sm border-0 rounded-3 h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title fw-bold text-primary">👥 Manage Users</h5>
+          <p class="text-muted">Add, edit, or remove users</p>
+          <a href="{% url 'admin_manage_users' %}" class="btn btn-primary">Go</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <div class="card shadow-sm border-0 rounded-3 h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title fw-bold text-success">📝 Manage Quizzes</h5>
+          <p class="text-muted">Create and manage quizzes</p>
+          <a href="{% url 'admin_manage_quizzes' %}" class="btn btn-success">Go</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

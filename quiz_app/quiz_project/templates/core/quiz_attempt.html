@@ -1,0 +1,37 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<div class="card quiz-attempt-card shadow-sm p-4">
+    <h4 style="color: black;">Question {{ question_number }} of {{ total_questions }}</h4>
+    <p class="lead" style="color: black;">{{ question.text }}</p>
+    <div class="alert alert-warning text-center" id="timer" style="font-size: 20px;"></div>
+    <form method="post" id="quiz-form">
+        {% csrf_token %}
+        {% for option in options %}
+        <div class="form-check" style="color: black;">
+            <input class="form-check-input" type="radio" name="option" id="option{{ option.id }}" value="{{ option.id }}">
+            <label class="form-check-label" for="option{{ option.id }}">{{ option.text }}</label>
+        </div>
+        {% endfor %}
+        <hr>
+        <button type="submit" class="btn btn-primary mt-3">Submit Answer</button>
+    </form>
+</div>
+
+<script>
+const timeLeft = 30;
+const timer = document.getElementById('timer');
+let remainingTime = timeLeft;
+
+function updateTimer() {
+    timer.innerText = remainingTime;
+    if (remainingTime <= 0) {
+        clearInterval(countdown);
+        document.querySelector('form').submit();
+    }
+    remainingTime--;
+}
+
+const countdown = setInterval(updateTimer, 1000);
+updateTimer(); // Start immediately
+</script>
+{% endblock %}
